@@ -24,14 +24,14 @@ var detectNetwork = function(cardNumber) {
   digits = digits.map(function(num){
     return parseInt(num);
   })
-  let switchPre = ['4903', '4905', '4911', '4936', '564182', '633110', '6333', '6759'];
+  let switchPre = [4903, 4905, 4911, 4936, 564182, 633110, 6333, 6759];
 
   if ((digits.length === 15) && (firstTwo === 34) || (firstTwo === 37)){
-  	console.log(cardNumber, cardNumber.length);
     return "American Express";
   } else if ((digits.length === 14) && (firstTwo === 38) || (firstTwo === 39)){
       return "Diner's Club";
-  } else if ((digits.length === 13 || 16 || 19) && (digits[0] === 4)){
+  } else if ((digits.length === 13 || 16 || 19) && (digits[0] === 4) && (digits[1] !== 9)){
+  	console.log(cardNumber);
   	  return "Visa";
   } else if ((digits.length === 16) && (firstTwo <= 55) && (firstTwo>= 51)){
   	  return "MasterCard";
@@ -52,6 +52,7 @@ var detectNetwork = function(cardNumber) {
   }
     // Switch 4903, 4905, 4911, 4936, 564182, 633110, 6333, 6759, length : 16, 18, 19
     else if ((digits.length === 16 || 18 || 19) && switchPre.includes(firstFour) || switchPre.includes(firstSix)){
+      console.log("Inside Switch");
       return "Switch";
     }
   

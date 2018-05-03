@@ -31,7 +31,14 @@ let cases = function(begin, digits) {
 }
 
 let maestroCases = cases(['5018', '5020', '5038', '6304'], [12, 13, 14, 15, 16, 17, 18, 19]);
-console.log(maestroCases);
+//console.log(maestroCases);
+let switchLengths = [16, 18, 19];
+let switchPre = ['4903', '4905', '4911', '4936', '564182', '633110', '6333', '6759'];
+
+let switchCases = cases(switchPre, switchLengths);
+
+
+
 describe('Introduction to Mocha Tests - READ ME FIRST', function() {
   // A Mocha test is just a function!
   // If the function throws an error when run, it fails.
@@ -196,20 +203,20 @@ describe('China UnionPay', function(){
   it('has a prefix of 62 and a length of 16-19', function(){
     detectNetwork('6211111111111111').should.equal('China UnionPay');
   })
-
-// Switch 4903, 4905, 4911, 4936, 564182, 633110, 6333, 6759, length : 16, 18, 19
-let switchLengths = [16, 18, 19];
-let switchPre = ['4903', '4905', '4911', '4936', '564182', '633110', '6333', '6759'];
-
-let switchCases = cases(switchPre, switchLengths);
-describe('Switch', function(){
-  it ('has a prefix of 4903, 4905, 4911, 4936, 564182, 633110, 6333, or 6759 and a length of 16, 18, 19'), function(){
-    for (let dummyIdx = 0; dummyIdx < switchCases.length; dummyIdx++){
-    detectNetwork(switchCases[dummyIdx]).should.equal('Switch');
-  }}
-  });
-
 });
+// Switch 4903, 4905, 4911, 4936, 564182, 633110, 6333, 6759, length : 16, 18, 19
+
+
+describe('Switch', function(){
+  it ('has a prefix of 4903, 4905, 4911, 4936, 564182, 633110, 6333, or 6759 and a length of 16, 18, 19', function(){
+    for (let dummyIdx = 0; dummyIdx < switchCases.length; dummyIdx++){
+      console.log('inside switch description');
+      detectNetwork(switchCases[dummyIdx]).should.equal('Switch');
+    }
+  })
+})
+
+
 
 
 
