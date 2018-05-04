@@ -207,14 +207,24 @@ describe('Discover', function() {
 
 describe('Maestro', function() {
   // Write full test coverage for the Maestro card
-  // Maestro: 12-19, 50, 56–58, 6.
+  //Maestro always has a prefix of 5018, 5020, 5038, or 6304, and a length of 12-19.
   // 
-  
-  it ('has a prefix of 50, 56-58, 6 and a length of 12-19', function(){
-    for (let dummyIdx = 0; dummyIdx < maestroCases.length; dummyIdx++){
-      detectNetwork(maestroCases[dummyIdx]).should.equal('Maestro');
-    }
-  })
+  let maestroPrefixes = ['5018', '5020', '5038', '6304'];
+  for (let digits = 12; digits < 20; digits++){
+    for (let idx = 0; idx < maestroPrefixes.length; idx++){
+      (function(prefix) {
+        it('has a prefix of ' + maestroPrefixes[idx] + ' and a length of ' + digits, function (){
+          let tempNum = maestroPrefixes[idx];
+          while (tempNum.length < digits){
+            tempNum += '1';
+          }
+
+        detectNetwork(tempNum).should.equal('Maestro');
+      });
+    
+  })(maestroPrefixes[idx], digits);
+    } // exit first loop
+  } // exit second loop
 });
 
 //China Union Pay
