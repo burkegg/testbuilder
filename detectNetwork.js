@@ -19,12 +19,15 @@ var detectNetwork = function(cardNumber) {
   let digits = cardNumber.split("");
 
   let firstTwo = parseInt(digits.slice(0, 2).join(""));
+    let firstThree = parseInt(digits.slice(0, 3).join(""));
+
   let firstFour = parseInt(digits.slice(0, 4).join(""));
   let firstSix = parseInt(digits.slice(0, 6).join(""));
   digits = digits.map(function(num){
     return parseInt(num);
   })
   let switchPre = [4903, 4905, 4911, 4936, 564182, 633110, 6333, 6759];
+  let discoverPre = [ 6011, 644, 645, 646, 647, 648, 649];
 
   if ((digits.length === 15) && (firstTwo === 34) || (firstTwo === 37)){
     return "American Express";
@@ -39,6 +42,9 @@ var detectNetwork = function(cardNumber) {
       return "MasterCard";
   } else if ((digits.length === 16 || 19) && (firstFour === 6011)){
   	  return "Discover";
+  } else if ((digits.length === 16 || 19) && (discoverPre.includes(firstFour)) || (discoverPre.includes(firstThree)) || (firstTwo === 65)){
+      console.log(cardNumber  + ' expects ' + 'Discover');
+      return "Discover";
   } 
     // Maestro: 12-19, 50, 56–58, 6.
 

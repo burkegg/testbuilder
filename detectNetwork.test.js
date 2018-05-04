@@ -179,6 +179,25 @@ describe('Discover', function() {
   it('has a prefix of 6011 and a length of 19', function(){
     detectNetwork('6011567890123456789').should.equal('Discover');
   });
+    for (var prefix = 644; prefix <= 649; prefix++) {
+    (function(prefix) {
+      it('has a prefix of ' + prefix + ' and a length of 16', function (){
+        detectNetwork(prefix + '1111111111111').should.equal('Discover');
+      });
+    
+    it('has a prefix of ' + prefix + ' and a length of 19', function(){
+      detectNetwork(prefix + '1111111111111111').should.equal('Discover');
+    });
+  })(prefix);
+  }
+
+    it('has a prefix of 65 and a length of 16', function(){
+    detectNetwork('6511111111111111').should.equal('Discover');
+  });
+  it('has a prefix of 65 and a length of 19', function(){
+    detectNetwork('6511111111111111111').should.equal('Discover');
+  });
+
 });
 
 
