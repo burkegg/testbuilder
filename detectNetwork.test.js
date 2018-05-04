@@ -8,35 +8,6 @@
 // different value.
 var FILL_ME_IN = 'Fill this value in';
 
-let cases = function(begin, digits) {
-      /* Generates an array of strings, representing all possible Maestro
-    cases.  Not all card numbers, but all combinations of starts and lengths.
-    */
-    let beginnings = begin;
-    let numLengths = digits;
-  let output = [];
-  for (let i = 0; i < beginnings.length; i++){
-    let tempRay = [];
-    for (let j = 0; j < numLengths.length; j++){
-      let tempNum = beginnings[i].split("");
-      let stop = numLengths[j];
-      while (tempNum.length < stop){
-        tempNum.push('1');
-      }
-      tempRay.push(tempNum.join(""));
-    }
-    output = output.concat(tempRay);
-  }
-  return output; 
-}
-
-let maestroCases = cases(['5018', '5020', '5038', '6304'], [12, 13, 14, 15, 16, 17, 18, 19]);
-//console.log(maestroCases);
-let switchLengths = [16, 18, 19];
-let switchPre = ['4903', '4905', '4911', '4936', '564182', '633110', '6333', '6759'];
-
-let switchCases = cases(switchPre, switchLengths);
-
 
 
 describe('Introduction to Mocha Tests - READ ME FIRST', function() {
@@ -201,10 +172,6 @@ describe('Discover', function() {
 });
 
 
-// generate an array with all cases of Maestro numbers
-
-
-
 describe('Maestro', function() {
   // Write full test coverage for the Maestro card
   //Maestro always has a prefix of 5018, 5020, 5038, or 6304, and a length of 12-19.
@@ -223,38 +190,67 @@ describe('Maestro', function() {
       });
     
   })(maestroPrefixes[idx], digits);
-    } // exit first loop
-  } // exit second loop
+    } 
+  } 
 });
 
-//China Union Pay
+//China UnionPay always has a prefix of 622126-622925, 624-626, or 6282-6288 and a length of 16-19.
 describe('China UnionPay', function(){
-  it('has a prefix of 62 and a length of 16-19', function(){
-    detectNetwork('6211111111111111').should.equal('China UnionPay');
-  })
+  for (let prefix = 622126; prefix <= 622925; prefix++){
+    for(let digits = 16; digits < 20; digits++){
+      let tempNum = prefix.toString();
+      while(tempNum.length < digits){
+        tempNum += '1';
+      }
+      it('has a prefix of ' + prefix + ' and a length of ' + digits, function(){
+        detectNetwork(tempNum).should.equal('China UnionPay');
+      });
+    }
+  }
+  
+  for (let prefix = 624; prefix <= 626; prefix++){
+    for(let digits = 16; digits < 20; digits++){
+      let tempNum = prefix.toString();
+      while(tempNum.length < digits){
+        tempNum += '1';
+      }
+      it('has a prefix of ' + prefix + ' and a length of ' + digits, function(){
+        detectNetwork(tempNum).should.equal('China UnionPay');
+      });
+    }
+  }
+  for (let prefix = 6282; prefix <= 6288; prefix++){
+    for(let digits = 16; digits < 20; digits++){
+      let tempNum = prefix.toString();
+      while(tempNum.length < digits){
+        tempNum += '1';
+      }
+      it('has a prefix of ' + prefix + ' and a length of ' + digits, function(){
+        detectNetwork(tempNum).should.equal('China UnionPay');
+      });
+    }
+  }
+
+
 });
-// Switch 4903, 4905, 4911, 4936, 564182, 633110, 6333, 6759, length : 16, 18, 19
 
 
 describe('Switch', function(){
-  it ('has a prefix of 4903, 4905, 4911, 4936, 564182, 633110, 6333, or 6759 and a length of 16, 18, 19', function(){
-    for (let dummyIdx = 0; dummyIdx < switchCases.length; dummyIdx++){
-      console.log('inside switch description');
-      detectNetwork(switchCases[dummyIdx]).should.equal('Switch');
+  let switchPre = ['4903', '4905', '4911', '4936', '564182', '633110', '6333', '6759'];
+  let switchLengths = [16, 18, 19];
+  for (let preIdx = 0; preIdx < switchPre.length; preIdx++){
+    for (let digitIdx = 0; digitIdx < switchLengths.length; digitIdx++){
+      let tempSwitch = switchPre[preIdx];
+      while (tempSwitch.length < switchLengths[digitIdx]){
+        tempSwitch += '1';
+      }
+      it ('has a prefix of ' + switchPre[preIdx] + ' and a length of ' + switchLengths[digitIdx], function(){
+        detectNetwork(tempSwitch).should.equal('Switch');
+      })
     }
-  })
+  }
+
 })
-
-
-
-
-
-
-
-
-
-
-
 
 
 
